@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Mexico City F1 Trip 2026",
+  "schemaVersion": 1,
+  "description": "Complete Mexico City F1 Grand Prix trip guide with race schedule, Día de los Muertos activities, restaurant recommendations, things to do in Roma neighborhood, and getting around tips. October 29 - November 3, 2026."
+}
+</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mexico City F1 Trip Guide - Roma Neighborhood</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --primary: #e63946;
+            --secondary: #457b9d;
+            --accent: #f4a261;
+            --light: #f1faee;
+            --dark: #1d3557;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .card h4 {
+            color: var(--secondary);
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            border-top: 3px solid var(--accent);
+        }
+
+        .info-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .info-box p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .category {
+            margin-bottom: 2rem;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .listing {
+            background: white;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .listing.nearby {
+            border-left: 3px solid var(--primary);
+            background: #fff8f8;
+        }
+
+        .listing-title {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .listing-details {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .listing-desc {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge.green {
+            background: #2e7d32;
+        }
+
+        .tip-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box strong {
+            color: #856404;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .tz-note {
+            background: #f0f4f8;
+            border-left: 4px solid #90a4ae;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            font-size: 0.88rem;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+            border-top: 1px solid #ddd;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏎️ Mexico City F1 Trip Guide</h1>
+        <p>October 29 - November 3, 2026 | Staying in Roma Neighborhood</p>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('logistics', event)">Race Logistics</button>
+            <button class="tab-btn" onclick="switchTab('diadelosmuertos', event)">Día de Muertos</button>
+            <button class="tab-btn" onclick="switchTab('restaurants', event)">Dining</button>
+            <button class="tab-btn" onclick="switchTab('activities', event)">Things to Do</button>
+            <button class="tab-btn" onclick="switchTab('bars', event)">Bars 🍹</button>
+            <button class="tab-btn" onclick="switchTab('travel', event)">Getting Around</button>
+            <button class="tab-btn" onclick="switchTab('tips', event)">Local Tips</button>
+        </div>
+
+        <!-- LOGISTICS TAB -->
+        <div id="logistics" class="tab-content active">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">🏁 F1 Race Day Logistics</h2>
+
+            <div class="card">
+                <h3>🏁 Official F1 Mexico Schedule 2026</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;"><strong>⏰ All times shown in Denver Time (Mountain Time) | Source: <a href="https://oversteer48.com/mexico-f1-schedule/" target="_blank" style="color: var(--primary);">oversteer48.com</a></strong></p>
+                <div style="background: #f5f5f5; padding: 1rem; border-radius: 6px; margin: 1rem 0;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <th style="text-align: left; padding: 0.75rem; background: var(--primary); color: white;">Session</th>
+                            <th style="text-align: left; padding: 0.75rem; background: var(--primary); color: white;">Date</th>
+                            <th style="text-align: left; padding: 0.75rem; background: var(--primary); color: white;">Denver Time (MDT/MST)</th>
+                            <th style="text-align: left; padding: 0.75rem; background: var(--primary); color: white;">Mexico City Time (CST)</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 0.75rem;">🟡 Practice 1</td>
+                            <td style="padding: 0.75rem;">Friday, Oct 30</td>
+                            <td style="padding: 0.75rem;"><strong>12:30 PM – 1:30 PM</strong></td>
+                            <td style="padding: 0.75rem; color: #666;">12:30 PM – 1:30 PM</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 0.75rem;">🟡 Practice 2</td>
+                            <td style="padding: 0.75rem;">Friday, Oct 30</td>
+                            <td style="padding: 0.75rem;"><strong>4:00 PM – 5:00 PM</strong></td>
+                            <td style="padding: 0.75rem; color: #666;">4:00 PM – 5:00 PM</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 0.75rem;">🟡 Practice 3</td>
+                            <td style="padding: 0.75rem;">Saturday, Oct 31</td>
+                            <td style="padding: 0.75rem;"><strong>11:30 AM – 12:30 PM</strong></td>
+                            <td style="padding: 0.75rem; color: #666;">11:30 AM – 12:30 PM</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 0.75rem;">🔴 Qualifying</td>
+                            <td style="padding: 0.75rem;">Saturday, Oct 31</td>
+                            <td style="padding: 0.75rem;"><strong>3:00 PM – 4:00 PM</strong></td>
+                            <td style="padding: 0.75rem; color: #666;">3:00 PM – 4:00 PM</td>
+                        </tr>
+                        <tr style="background: #fff3cd;">
+                            <td style="padding: 0.75rem; font-weight: bold;">🏆 RACE DAY</td>
+                            <td style="padding: 0.75rem; font-weight: bold;">Sunday, Nov 1</td>
+                            <td style="padding: 0.75rem; font-weight: bold;"><strong>1:00 PM</strong></td>
+                            <td style="padding: 0.75rem; color: #666; font-weight: bold;">2:00 PM</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tz-note">
+                    ℹ️ <strong>Time Zone Note:</strong> Oct 30–31: Denver (MDT, UTC−6) = Mexico City (CST, UTC−6) — times are identical both days. Race Day Nov 1: US clocks fall back to MST (UTC−7) at 2 AM, while Mexico City stays on CST (UTC−6) — Mexico City is 1 hour ahead for the race.
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;"><strong>Note:</strong> Race is 71 laps, approximately 2 hours. Arrive 2–3 hours early on race day — plan to leave your Airbnb around <strong>10:00–10:30 AM Denver time</strong>. Gate opening times typically 8–10 AM local time.</p>
+            </div>
+
+            <div class="card">
+                <h3><a href="https://maps.google.com/?q=Autodromo+Hermanos+Rodriguez+Mexico+City" target="_blank" style="color: var(--primary); text-decoration: none;">Autódromo Hermanos Rodríguez ↗</a></h3>
+                <p><strong>Address:</strong> Circuito Interior, Xalapa, 06500 Mexico City</p>
+                <p><strong>Distance from your Airbnb (Calle Querétaro 240):</strong> ~8 km south</p>
+                <p><strong>Estimated travel time:</strong> 20–40 minutes depending on traffic</p>
+                <p><strong>Official F1 Info:</strong> <a href="https://www.formula1.com/en/racing/2026/mexico" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">F1 Mexico Grand Prix 2026 →</a></p>
+            </div>
+
+            <div class="card">
+                <h3>Getting to the Race Track</h3>
+                <h4>🚕 Option 1: Uber/Taxi (RECOMMENDED)</h4>
+                <p>Most convenient and reliable. Budget 150–250 MXN (~$8–14 USD) during non-peak hours. Peak hours (morning of race) may be 2–3x higher. Request rides early (aim to leave by 10:00–10:30 AM Denver / 11:00–11:30 AM local).</p>
+
+                <h4>🚇 Option 2: Metro + Local Transport</h4>
+                <p>Take Metro Line 2 southbound toward Tasqueña, exit at station closest to circuit. Then local bus or short taxi ride. Budget 1.5–2 hours total. Cheapest option (~20 MXN = $1 USD).</p>
+
+                <h4>🚌 Option 3: Shuttle Services</h4>
+                <p>F1 organizers offer shuttle buses from central locations. Check <a href="https://www.mexico.gp/en/" target="_blank" style="color: var(--primary);">official F1 Mexico website</a> or hotel concierge for details. Pre-book if available.</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>🎫 Ticket Tips</h4>
+                    <p>Arrive 2–3 hours early on race day. Bring: tickets (print or digital), ID, sunscreen, hat, comfortable shoes. Parking fills quickly if driving.</p>
+                </div>
+                <div class="info-box">
+                    <h4>📱 What to Bring</h4>
+                    <p>Portable charger, water bottle, snacks, cash (some vendors don't take cards). Weather in early Nov: 15–25°C (59–77°F), mostly sunny.</p>
+                </div>
+                <div class="info-box">
+                    <h4>🍽️ Food at Track</h4>
+                    <p>Track food is expensive. Eat beforehand or bring snacks. Beverages available but pricey. No outside food/drink allowed in some zones.</p>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Pro Tip:</strong> Book your return Uber/taxi the night before if possible. Hundreds of thousands of fans leave simultaneously, causing massive surge pricing and wait times.
+            </div>
+        </div>
+
+        <!-- DÍA DE LOS MUERTOS TAB -->
+        <div id="diadelosmuertos" class="tab-content">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">💀 Día de los Muertos (Day of the Dead) Guide</h2>
+
+            <div class="note">
+                <strong>🎉 Perfect Timing!</strong> November 1–2 is Día de los Muertos, one of Mexico's most important cultural celebrations. You'll experience this beautiful tradition firsthand during your trip. It's a colorful, vibrant celebration of life and remembrance—not dark or scary as outsiders sometimes think!
+            </div>
+
+            <div class="card">
+                <h3>What is Día de los Muertos?</h3>
+                <p>An ancient Mexican tradition blending indigenous and Catholic beliefs. Mexicans celebrate and honor deceased loved ones with <strong>ofrendas</strong> (altars), <strong>marigolds</strong> (cempasúchil flowers), <strong>pan de muerto</strong> (special bread), and <strong>calaveras</strong> (skull decorations).</p>
+                <p><strong>When:</strong> October 31 – November 2 (peaks Nov 1–2)</p>
+                <p><strong>Vibe:</strong> Joyful, colorful, spiritual—celebrating life rather than mourning death.</p>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🏛️ Must-See: Museums & Major Events</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.mna.inah.gob.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">National Museum of Anthropology ↗</a> — Día de Muertos Exhibition</div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Museo+Nacional+de+Antropologia+Mexico+City" target="_blank" style="color: var(--secondary);">Chapultepec Park</a> | ⏰ 9 AM – 7 PM daily | 💰 85 MXN (~$5)</div>
+                    <div class="listing-desc">Spectacular Día de Muertos exhibition with traditional altars from different Mexican regions, Day of Dead artifacts, and immersive displays. This is the premier place to understand the celebration's cultural significance. Plan 2–3 hours. Go early—very crowded Nov 1–2.</div>
+                    <span class="badge">Must-See</span><span class="badge">Cultural</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.templomayor.inah.gob.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Templo Mayor ↗</a> — Día de Muertos Altar & Events</div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Templo+Mayor+Mexico+City" target="_blank" style="color: var(--secondary);">Centro Histórico</a> | ⏰ 9 AM – 5 PM Tue–Sun | 💰 80 MXN</div>
+                    <div class="listing-desc">Ancient Aztec temple ruins with special Día de Muertos programming, altars, and cultural demonstrations. Stunning archaeological setting combined with living tradition. 1–2 hours recommended.</div>
+                    <span class="badge">Historical</span><span class="badge">Altar Display</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.museofridakahlo.org.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Frida Kahlo Museum (Casa Azul) ↗</a> — Special Día de Muertos</div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Museo+Frida+Kahlo+Coyoacan+Mexico+City" target="_blank" style="color: var(--secondary);">Coyoacán neighborhood</a> (30 min away) | ⏰ 10 AM – 6 PM Tue–Sun | 💰 280 MXN (~$16)</div>
+                    <div class="listing-desc">Famous artist's home with special Día de Muertos altar display. Kahlo was obsessed with the holiday and death imagery. Beautiful, intimate, and deeply connected to the celebration. Pre-book tickets online—it gets very crowded during this season.</div>
+                    <span class="badge">Artist's House</span><span class="badge">Iconic</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Paseo+de+la+Reforma+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Día de Muertos Parade ↗</a></div>
+                    <div class="listing-details">📍 Paseo de la Reforma &amp; Centro Histórico | ⏰ Usually Nov 1 evening | 💰 Free</div>
+                    <div class="listing-desc">The city hosts a massive Día de Muertos parade with floats, costumes, music, and thousands of participants. Routes vary year to year—check closer to your visit for exact date and location. Incredibly vibrant and crowded. Arrive early for good viewing spots.</div>
+                    <span class="badge">Free Event</span><span class="badge">Spectacular</span>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🌺 Día de Muertos in Roma &amp; Condesa Neighborhoods</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Roma+Norte+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Street Decorations &amp; Pop-Up Altars ↗</a></div>
+                    <div class="listing-details">Throughout Roma and Condesa</div>
+                    <div class="listing-desc">Expect vibrant marigold decorations, skeleton decorations, skull imagery, and temporary altars in parks, streets, and plazas. Take photos of the colorful displays. Many local shops and restaurants create elaborate decorations.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Panteon+Civil+de+Dolores+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Cemetery Visits (if interested) ↗</a></div>
+                    <div class="listing-details">📍 Panteón Civil de Dolores &amp; other cemeteries | ⏰ Busiest Nov 1–2 evening</div>
+                    <div class="listing-desc">Families visit cemeteries to honor deceased loved ones. Oct 31 evening and Nov 1–2 are busiest. Cemeteries are decorated with thousands of marigolds, candles, and photos. It's a peaceful, reverent experience. Not morbid—joyful and colorful. Go during daytime first time if you're unsure.</div>
+                    <span class="badge">Cultural Experience</span><span class="badge">Evening Activity</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Ofrenda (Altar) Workshops</div>
+                    <div class="listing-details">📍 Various locations in Roma | ⏰ Dates vary | 💰 200–500 MXN</div>
+                    <div class="listing-desc">Some cultural centers and galleries in Roma host hands-on workshops where you can learn to build your own ofrenda with traditional items. Check local listings closer to your trip. Great way to participate and understand the tradition.</div>
+                    <span class="badge">Hands-On</span><span class="badge">Educational</span>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🍞 Traditional Foods to Try</h3>
+
+                <div class="listing">
+                    <div class="listing-title">Pan de Muerto (Bread of the Dead)</div>
+                    <div class="listing-details">Available everywhere Oct 31 – Nov 2</div>
+                    <div class="listing-desc">Sweet bread shaped like a skull or round loaf with bone-like decorations. Tastes of orange and anise. Not spooky—delicious! Buy at bakeries, cafes, supermarkets. Perfect with hot chocolate or coffee for breakfast.</div>
+                    <span class="badge">Must-Try</span><span class="badge">Sweet</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Mole Negro (Black Mole)</div>
+                    <div class="listing-details">Traditional Oaxacan dish, served during Día de Muertos</div>
+                    <div class="listing-desc">Complex, dark sauce with chocolate, chilies, and 20+ ingredients. Traditionally served over chicken. Labor-intensive to make. Many restaurants feature it this time of year. Try at traditional Mexican restaurants.</div>
+                    <span class="badge">Traditional</span><span class="badge">Complex Flavor</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Calaveras de Azúcar (Sugar Skulls)</div>
+                    <div class="listing-details">Colorful candy skulls, available everywhere</div>
+                    <div class="listing-desc">Beautiful decorative skulls made from sugar. Often personalized with names on the forehead. Edible but often kept as decoration. Great souvenir. Buy from street vendors or candy shops throughout the city.</div>
+                    <span class="badge">Souvenir</span><span class="badge">Candy</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Agua de Jamaica (Hibiscus Water)</div>
+                    <div class="listing-details">Refreshing traditional drink</div>
+                    <div class="listing-desc">Tart, slightly sweet hibiscus tea served cold or hot. Iconic Día de Muertos beverage. You'll see it at festival events and street vendors. Try it!</div>
+                    <span class="badge">Beverage</span><span class="badge">Refreshing</span>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🎨 Cultural Traditions to Experience</h3>
+
+                <div class="listing">
+                    <div class="listing-title">Face Painting — Calavera Makeup</div>
+                    <div class="listing-details">Street artists and salons offer skull face painting Nov 1–2</div>
+                    <div class="listing-desc">Get your face painted in traditional skull/skeleton style (calavera). Beautiful, artistic designs. Street artists throughout city do this for 100–300 MXN. Great for photos and immersive experience.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Costumes &amp; Dress</div>
+                    <div class="listing-details">Skeleton/skull/Grim Reaper costumes common Nov 1–2</div>
+                    <div class="listing-desc">Many locals and tourists dress as skeletons or in Day of Dead themed outfits. Black with skull face paint is popular. Consider picking up a skeleton costume or skull mask at a local shop to participate in the festivities.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Marigold Markets</div>
+                    <div class="listing-details">📍 Throughout city, concentrated near cemeteries and markets</div>
+                    <div class="listing-desc">Flower markets overflow with cempasúchil (bright orange marigolds) which symbolize death in Mexican tradition. Beautiful photo op. Buy a small bundle (30–50 MXN) as a souvenir or to participate in cemetery visits.</div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">📅 Suggested Día de Muertos Itinerary</h3>
+
+                <div class="listing">
+                    <div class="listing-title">October 31 (Saturday) — Eve of Día de Muertos</div>
+                    <div class="listing-desc">
+                        <strong>Morning/Afternoon:</strong> Visit Frida Kahlo Museum (Casa Azul) with special Día de Muertos displays. Coyoacán neighborhood is charming to explore.<br>
+                        <strong>Evening:</strong> Dinner at traditional Mexican restaurant featuring Día de Muertos menu items. Try mole or other seasonal specialties.<br>
+                        <strong>Late evening:</strong> Walk through Roma/Condesa to see street decorations and temporary altars. Take photos of the vibrant setup.
+                    </div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">November 1 (Sunday) — Día de Muertos + F1 RACE DAY ⚠️</div>
+                    <div class="listing-desc">
+                        <strong>Big day — overlapping celebrations!</strong><br>
+                        <strong>Early morning:</strong> Breakfast with pan de muerto and hot chocolate at a local café. Quick stroll to see street decorations/altars in Roma before heading to the track.<br>
+                        <strong>Midday:</strong> Leave for Autódromo Hermanos Rodríguez by <strong>10:00–10:30 AM Denver / 11:00–11:30 AM local</strong>. Race starts <strong>1:00 PM Denver / 2:00 PM local</strong>.<br>
+                        <strong>Evening:</strong> Return from race. If energy permits, catch part of the Día de Muertos parade on Paseo de la Reforma or stroll through Roma to take in the costumed crowds—streets will be packed with skeleton costumes and skull makeup!
+                    </div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">November 2 (Monday) — Día de Muertos Continued</div>
+                    <div class="listing-desc">
+                        <strong>Morning:</strong> Leisurely recovery breakfast. Get calavera face painting by a street artist.<br>
+                        <strong>Afternoon:</strong> Visit National Museum of Anthropology for Día de Muertos exhibition (crowds smaller than Nov 1). Or explore Centro Histórico and Templo Mayor.<br>
+                        <strong>Late afternoon:</strong> Optional cemetery visit to see families honoring their loved ones with marigolds, candles, and photos. Peaceful, spiritual atmosphere.<br>
+                        <strong>Evening:</strong> Special Día de Muertos menu dinner. Many places have extended celebrations—last chance to fully immerse.
+                    </div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">November 3 (Tuesday) — Departure Day</div>
+                    <div class="listing-desc">
+                        <strong>Morning:</strong> Pack and prepare for departure. Grab last pan de muerto or café de olla for the road if you have time.<br>
+                        <strong>Afternoon:</strong> Head to airport for your flight home to Denver.
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Día de Muertos Tips:</strong><br>
+                • It's not morbid or scary—it's a joyful celebration of life and remembrance<br>
+                • Be respectful if visiting cemeteries—you're witnessing intimate family moments<br>
+                • Photography is generally welcome but always ask permission before photographing people<br>
+                • Wear comfortable shoes—you'll be walking a lot<br>
+                • Nov 1–2 will be crowded in popular areas; plan accordingly<br>
+                • Many restaurants and shops have special Día de Muertos menus and decorations—ask what's special<br>
+                • This is a UNESCO-recognized Intangible Cultural Heritage of Humanity—you're experiencing something truly special!
+            </div>
+        </div>
+
+        <!-- RESTAURANTS TAB -->
+        <div id="restaurants" class="tab-content">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">🍽️ Dining in Roma Neighborhood</h2>
+
+            <div class="note">
+                <strong>About Roma:</strong> This is Mexico City's trendiest neighborhood with excellent restaurants, cafes, galleries, and shops. You're in the perfect location for food and culture!
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🌮 Must-Try Mexican Cuisine</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://contramar.com.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Contramar ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Contramar+Mexico+City" target="_blank" style="color: var(--secondary);">Colonia Cuauhtémoc</a> | ⭐ Iconic Mexico City seafood | 💰 High-end</div>
+                    <div class="listing-desc">Iconic seafood restaurant with fresh fish, ceviche, and marinated meats. Beautiful colonial setting. Book ahead—very popular. Best for a special dinner.</div>
+                    <span class="badge">Fine Dining</span><span class="badge">Seafood</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.quintonil.com/" target="_blank" style="color: var(--dark); text-decoration: none;">Quintonil ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Quintonil+Mexico+City" target="_blank" style="color: var(--secondary);">Polanco</a> | ⭐ World's 50 Best Restaurants | 💰 Splurge-worthy</div>
+                    <div class="listing-desc">World-class contemporary Mexican. Exceptional tasting menu. Reserve well in advance if interested.</div>
+                    <span class="badge">Fine Dining</span><span class="badge">Tasting Menu</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Ambar+Restaurante+Roma+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Ámbar Restaurante ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Roma+Norte+Mexico+City" target="_blank" style="color: var(--secondary);">Roma</a> | 💰 Mid-range | ⭐ Modern Mexican</div>
+                    <div class="listing-desc">Contemporary take on classic Mexican dishes. Excellent moles, fresh ingredients, great cocktails. Good for casual lunches or dinners.</div>
+                    <span class="badge">Modern Mexican</span><span class="badge">Cocktails</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Totem+Tacos+Roma+Norte+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Tótem ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Roma+Norte+Mexico+City" target="_blank" style="color: var(--secondary);">Roma Norte</a> | 💰 Budget-friendly | Street food vibes</div>
+                    <div class="listing-desc">Casual spot for tacos, quesadillas, tamales. Local favorite. Perfect for quick, authentic meals between exploring.</div>
+                    <span class="badge">Street Food</span><span class="badge">Casual</span>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">☕ Cafes &amp; Brunch Spots</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Blend+Station+Roma+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Blend Station ↗</a></div>
+                    <div class="listing-details">📍 Roma | 💰 Budget | Specialty coffee</div>
+                    <div class="listing-desc">Excellent third-wave coffee, pastries, light breakfast. Great for morning coffee before heading to the race track.</div>
+                    <span class="badge">Coffee</span><span class="badge">Breakfast</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Cafe+de+Olla+Roma+Norte+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Café de Olla ↗</a></div>
+                    <div class="listing-details">📍 Roma | 💰 Budget | Traditional café</div>
+                    <div class="listing-desc">Charming traditional Mexican café serving café de olla (cinnamon coffee), conchas (sweet bread), and simple breakfast items.</div>
+                    <span class="badge">Traditional</span><span class="badge">Budget</span>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🍜 Fine Dining &amp; International</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://pujol.com.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Pujol ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Pujol+Mexico+City" target="_blank" style="color: var(--secondary);">Polanco</a> | ⭐ #5 World's 50 Best | 💰 Splurge</div>
+                    <div class="listing-desc">Ranked among world's best restaurants. Avant-garde Mexican cuisine. Reserve far in advance.</div>
+                    <span class="badge">Fine Dining</span><span class="badge">Tasting Menu</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://restaurantenicos.com.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Nicos ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Nicos+Restaurant+Mexico+City" target="_blank" style="color: var(--secondary);">Colonia Argentina Antigua</a> | ⭐ Michelin-recognized | 💰 High-end</div>
+                    <div class="listing-desc">Contemporary Mexican using traditional techniques and seasonal ingredients. Elegant setting, innovative dishes. Great for special occasions.</div>
+                    <span class="badge">Fine Dining</span><span class="badge">Mexican</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Pesto+Cafe+Roma+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Pesto Café ↗</a></div>
+                    <div class="listing-details">📍 Roma | 💰 Mid-range | Italian</div>
+                    <div class="listing-desc">Casual Italian spot with fresh pasta, salads, gelato. Good for a relaxed meal.</div>
+                    <span class="badge">Italian</span><span class="badge">Casual</span>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Dining Tips:</strong> Spanish is helpful but English is spoken in most tourist areas. Tip 15–20% is customary. Many restaurants close 3–5 PM between lunch and dinner service. Make reservations for dinner, especially on weekends.
+            </div>
+        </div>
+
+        <!-- ACTIVITIES TAB -->
+        <div id="activities" class="tab-content">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">🎭 Things to Do Around Roma</h2>
+
+            <div class="category">
+                <h3 class="category-title">🏛️ Museums &amp; Culture</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.museotamayo.org/" target="_blank" style="color: var(--dark); text-decoration: none;">Museo Tamayo ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Museo+Tamayo+Mexico+City" target="_blank" style="color: var(--secondary);">Chapultepec Park</a> | ⏰ 10 AM – 6 PM Tue–Sun | 💰 80 MXN (~$5)</div>
+                    <div class="listing-desc">Contemporary art museum with rotating exhibitions. Modern building, short visit (1–2 hours). Great for art lovers.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.fundacionjumex.org/" target="_blank" style="color: var(--dark); text-decoration: none;">Museo Jumex ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Museo+Jumex+Mexico+City" target="_blank" style="color: var(--secondary);">Polanco</a> (10 min ride) | ⏰ 10 AM – 7 PM Tue–Sun | 💰 Free–120 MXN</div>
+                    <div class="listing-desc">Contemporary art with works by international artists. Free Tuesdays after 4 PM. Modern facility, 2–3 hours.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.palaciobelasartes.gob.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Palacio de Bellas Artes ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Palacio+de+Bellas+Artes+Mexico+City" target="_blank" style="color: var(--secondary);">Centro Histórico</a> (15 min metro) | ⏰ 10 AM – 5:45 PM Tue–Sun | 💰 90 MXN (~$5)</div>
+                    <div class="listing-desc">Stunning Art Deco palace with murals by Diego Rivera, Siqueiros. Architecture is spectacular. Also hosts theater, ballet, concerts.</div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🚶 Walking &amp; Exploring</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Roma+Norte+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Roma Neighborhood Stroll ↗</a></div>
+                    <div class="listing-details">📍 Start at your Airbnb on Calle Querétaro | ⏰ 2–3 hours | 💰 Free</div>
+                    <div class="listing-desc">Walk around Roma's colonial streets, see street art, pop into galleries, boutiques, and cafes. Avenida Álvaro Obregón has great shops and restaurants. Very walkable and charming.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Condesa+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Condesa Neighborhood (Adjacent) ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Parque+Espana+Condesa+Mexico+City" target="_blank" style="color: var(--secondary);">5–10 min walk from Roma</a> | ⏰ 2 hours | 💰 Free</div>
+                    <div class="listing-desc">Sister neighborhood with tree-lined streets, cafes, parks. Parque España in center is lovely for people-watching. Great restaurants and bars.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Paseo+de+la+Reforma+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Paseo de la Reforma ↗</a></div>
+                    <div class="listing-details">📍 20 min metro | ⏰ Flexible | 💰 Free to walk</div>
+                    <div class="listing-desc">Famous avenue with monuments, sculptures, museums, and high-end shopping. The Angel monument is iconic. Bike rentals available (Ecobici).</div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🌳 Parks &amp; Nature</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://bosquedechapultepec.cdmx.gob.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Chapultepec Park ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Bosque+de+Chapultepec+Mexico+City" target="_blank" style="color: var(--secondary);">20 min taxi/metro</a> | ⏰ All day | 💰 Free entry, museums have fees</div>
+                    <div class="listing-desc">Massive urban park with forests, lakes, museums (National Museum, Tamayo, etc.), castle, zoo. Could easily spend a full day here. Great for morning walk.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Viveros+de+Coyoacan+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Viveros de Coyoacán ↗</a></div>
+                    <div class="listing-details">📍 15 min south | ⏰ 7 AM – 6 PM daily | 💰 Free</div>
+                    <div class="listing-desc">Beautiful botanical garden and nursery. Peaceful, green space with walking trails, sculptures, cafes. Much less touristy than Chapultepec. Ideal for a quiet afternoon.</div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🎪 Other Entertainment</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.cmll.com/" target="_blank" style="color: var(--dark); text-decoration: none;">Lucha Libre at Arena México ↗</a></div>
+                    <div class="listing-details">📍 <a href="https://maps.google.com/?q=Arena+Mexico+Lucha+Libre+Mexico+City" target="_blank" style="color: var(--secondary);">Arena México</a> (30 min away) | ⏰ Events vary | 💰 300–1000+ MXN</div>
+                    <div class="listing-desc">Authentic Mexican wrestling experience. Colorful, theatrical, fun. Events usually Friday–Sunday. Grab tickets at venue or online. Quintessential Mexico City experience.</div>
+                    <span class="badge">Live Event</span><span class="badge">Cultural</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Live Music Venues</div>
+                    <div class="listing-details">📍 Roma/Condesa | ⏰ Evening | 💰 Variable</div>
+                    <div class="listing-desc">Many venues in Roma have live jazz, son jarocho (traditional Mexican music), and folk performances. Check local listings closer to your trip dates for current schedules.</div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Activity Tip:</strong> Many museums are closed Mondays. Check hours before visiting. Metro is fast, cheap, and easy to navigate (bring small bills for tickets). Taxis via Uber are safer than hailing on street.
+            </div>
+        </div>
+
+        <!-- BARS TAB (new dedicated tab) -->
+        <div id="bars" class="tab-content">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">🍹 Local Bars &amp; Nightlife</h2>
+
+            <div class="note">
+                <strong>📍 Your Airbnb:</strong> Calle Querétaro 240, Roma Norte. You're sitting on one of Roma's best bar streets — several top spots are literally on your block or a short walk away.
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">🏠 Right On Your Street — Calle Querétaro</h3>
+
+                <div class="listing nearby">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Mama+Rumba+Queretaro+Roma+Norte+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Mama Rumba ↗</a></div>
+                    <div class="listing-details">📍 C. Querétaro 230 — <strong>10 meters from your door!</strong> | 💰 80–150 MXN | 🌟 Salsa &amp; Live Music</div>
+                    <div class="listing-desc">One of Mexico City's most famous salsa clubs — legendary on the block. Wed–Sat nights with cheap dance lessons before the night gets going, then full salsa dancing. Great mix of locals and tourists. Lively energy, reasonably priced drinks.</div>
+                    <span class="badge green">Steps Away</span><span class="badge">Salsa</span><span class="badge">Live Music</span>
+                </div>
+
+                <div class="listing nearby">
+                    <div class="listing-title"><a href="https://goo.gl/maps/P3bv7AUn9hVx9L7WA" target="_blank" style="color: var(--dark); text-decoration: none;">Biergarten ↗</a></div>
+                    <div class="listing-details">📍 C. Querétaro 225 — <strong>Same block!</strong> | 💰 80–160 MXN | 🌟 Rooftop Craft Beer</div>
+                    <div class="listing-desc">Rooftop bar atop a charming Roma building with stunning neighborhood views. Specializes in craft beers — local Mexican brews (Cucapa, Minerva) plus international favorites. Casual and relaxed outdoor vibe. Hosts beer tastings, live music, and themed nights. Perfect for a casual first night out.</div>
+                    <span class="badge green">Steps Away</span><span class="badge">Rooftop</span><span class="badge">Craft Beer</span>
+                </div>
+
+                <div class="listing nearby">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Escollo+Bar+Queretaro+Roma+Norte+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Escollo ↗</a></div>
+                    <div class="listing-details">📍 C. Querétaro 182 — <strong>1 short block away</strong> | 💰 100–180 MXN | 🌟 Craft Cocktails</div>
+                    <div class="listing-desc">Sleek minimalist cocktail bar with skilled mixologists presenting visually stunning drinks. Fresh take on both classic and innovative cocktails. Stylish crowd, sophisticated atmosphere. Great for a nicer night out when you don't want to go far.</div>
+                    <span class="badge green">1 Block</span><span class="badge">Craft Cocktails</span><span class="badge">Stylish</span>
+                </div>
+
+                <div class="listing nearby">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=La+Nuclear+Bar+Queretaro+Roma+Norte+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">La Nuclear ↗</a></div>
+                    <div class="listing-details">📍 C. Querétaro 96 — <strong>~5 blocks</strong> | 💰 70–140 MXN | 🌟 Mexican Spirits</div>
+                    <div class="listing-desc">Bold bar dedicated to showcasing Mexican spirits — mezcal, tequila, raicilla, bacanora. Knowledgeable staff guide you through different expressions. Great if you want to explore the full range of Mexican agave spirits beyond the tourist standbys.</div>
+                    <span class="badge green">Nearby</span><span class="badge">Mezcal</span><span class="badge">Mexican Spirits</span>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">⭐ Roma Norte's Best — Short Walk Away</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://goo.gl/maps/DTsyqwZr7RbxQ1k26" target="_blank" style="color: var(--dark); text-decoration: none;">Licorería Limantour ↗</a></div>
+                    <div class="listing-details">📍 Av. Álvaro Obregón 106 | 💰 120–200 MXN | 🌟 World's 50 Best Bars</div>
+                    <div class="listing-desc">Consistently rated one of the top cocktail bars in the world — innovative, meticulously crafted cocktails like the Margarita Al Pastor. Chic but laid-back atmosphere where locals and foreigners mingle. Ask the bartenders for a custom cocktail. A must-visit, especially with F1 weekend crowd energy.</div>
+                    <span class="badge">World-Class</span><span class="badge">Craft Cocktails</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://goo.gl/maps/owpNFB33vhQZNvXT7" target="_blank" style="color: var(--dark); text-decoration: none;">Pulquería Los Insurgentes ↗</a></div>
+                    <div class="listing-details">📍 Av. Insurgentes Sur 226 | 💰 50–100 MXN | 🌟 Traditional Pulque Bar</div>
+                    <div class="listing-desc">Vibrant and authentic spot serving pulque — a traditional Mexican fermented maguey drink. Festive atmosphere, local crowd, cultural events and music nights. Start with a small natural pulque to appreciate its unique flavor, then try fruit-infused versions. A truly authentic experience you won't find at home.</div>
+                    <span class="badge">Authentic</span><span class="badge">Traditional</span><span class="badge">Pulque</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://goo.gl/maps/ySwyjtBsJRowiPUV6" target="_blank" style="color: var(--dark); text-decoration: none;">Ladina Bar ↗</a></div>
+                    <div class="listing-details">📍 Colima 333, Roma Norte | 💰 80–150 MXN | 🌟 Mezcal Cocktails</div>
+                    <div class="listing-desc">Warm, intimate mezcal cocktail bar with rustic-contemporary design. Local favorite known for innovative mezcal-based drinks with a modern twist on traditional Mexican flavors. The kind of place that feels like a local secret. Great craft beer and wine selection too.</div>
+                    <span class="badge">Mezcal</span><span class="badge">Intimate</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://goo.gl/maps/jNvL56VFbc6U79ib9" target="_blank" style="color: var(--dark); text-decoration: none;">Bar Oriente ↗</a></div>
+                    <div class="listing-details">📍 Calle de Durango 181, Roma Norte | 💰 100–180 MXN | 🌟 Asian-Inspired Cocktails</div>
+                    <div class="listing-desc">Captivating upscale cocktail bar blending contemporary elegance with Asian-inspired touches. Signature "Eastern Old Fashioned" reimagines classics with a twist. Sleek, modern decor with soft lighting. Great for a more refined evening without feeling pretentious.</div>
+                    <span class="badge">Upscale</span><span class="badge">Craft Cocktails</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://goo.gl/maps/gfpLHnkRWxfbBMib9" target="_blank" style="color: var(--dark); text-decoration: none;">Pool Lucille ↗</a></div>
+                    <div class="listing-details">📍 Cda. Orizaba 99, Roma Norte | 💰 80–150 MXN | 🌟 Pool Hall Bar</div>
+                    <div class="listing-desc">Unique combo: upscale cocktail bar meets classic pool hall. Sleek pool tables, plush seating, expert mixologists. Pool lessons and tournaments open to all skill levels. Fun way to meet people and compete while drinking well-crafted cocktails.</div>
+                    <span class="badge">Pool Hall</span><span class="badge">Unique</span><span class="badge">Social</span>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://goo.gl/maps/xGnM3kHCwZejbPSE7" target="_blank" style="color: var(--dark); text-decoration: none;">Gin Gin (Álvaro Obregón) ↗</a></div>
+                    <div class="listing-details">📍 Córdoba 107, Roma Norte | 💰 100–170 MXN | 🌟 Gin Specialist</div>
+                    <div class="listing-desc">Sophisticated gin bar with exposed brick, soft lighting, and plush seating. Extensive gin selection from well-known international brands to small-batch craft gins. The "Gin Gin Mule" is a house favorite. Staff are knowledgeable and can guide you through discoveries.</div>
+                    <span class="badge">Gin Bar</span><span class="badge">Sophisticated</span>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Bar Tips for F1 Weekend:</strong><br>
+                • F1 weekend (Oct 30 – Nov 1) brings a massive international crowd to Roma — bars will be packed, especially Fri–Sun. Arrive early or expect waits.<br>
+                • Mama Rumba and Biergarten on your block make for the perfect low-effort first night — just walk downstairs.<br>
+                • For a bar crawl: start at Biergarten (rooftop views + craft beer) → Pulquería Los Insurgentes (pulque experience) → Licorería Limantour (world-class cocktails) — all within 15 min walk.<br>
+                • Cash welcomed everywhere; most spots also take cards.
+            </div>
+        </div>
+
+        <!-- TRAVEL TAB -->
+        <div id="travel" class="tab-content">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">🚗 Getting Around Mexico City</h2>
+
+            <div class="category">
+                <h3 class="category-title">Transportation Options</h3>
+
+                <div class="listing">
+                    <div class="listing-title">🚕 Uber / Didi (Recommended)</div>
+                    <div class="listing-details">Safest and most convenient</div>
+                    <div class="listing-desc">Both apps work great in Mexico City. Safer than street taxis. Download before arrival. Prices reasonable (40–200 MXN for short rides). Surge pricing during rush hours and after nightlife.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">🚇 <a href="https://metro.cdmx.gob.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Metro (Subway) ↗</a></div>
+                    <div class="listing-details">Cheap and efficient (20 MXN = ~$1)</div>
+                    <div class="listing-desc">13 lines covering the city. Fast, but crowded during rush hours (7–9 AM, 6–8 PM). Get Tarjeta Libre rechargeable card at stations. Safe during day and early evening; avoid late night.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">🚌 Buses (Peseros)</div>
+                    <div class="listing-details">Cheap (5–10 MXN) but complicated</div>
+                    <div class="listing-desc">Colorful local buses everywhere. Hard to navigate for tourists without Spanish. Ask hotel staff for help if needed. Good for short, local trips.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">🚴 <a href="https://ecobici.cdmx.gob.mx/" target="_blank" style="color: var(--dark); text-decoration: none;">Ecobici (Bike Rental) ↗</a></div>
+                    <div class="listing-details">Fun for exploring Roma/Condesa</div>
+                    <div class="listing-desc">Bike-sharing system throughout city. Around 300 MXN/day. Great for neighborhoods, but heavy traffic on main avenues. Best for leisurely day exploring.</div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">Getting to/from Airport</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://maps.google.com/?q=Benito+Juarez+International+Airport+Mexico+City" target="_blank" style="color: var(--dark); text-decoration: none;">Benito Juárez International Airport (MEX) ↗</a></div>
+                    <div class="listing-details">📍 20 km northeast | 30–45 min from Roma</div>
+                    <div class="listing-desc"><strong>Best option:</strong> Uber/Didi (150–250 MXN = $8–14). <strong>Budget option:</strong> Airport metro line (~150 MXN, ~1 hour with connections). <strong>Premium:</strong> Pre-arranged car service (200–300 MXN).</div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">Safety Tips</h3>
+                <div class="note">
+                    <strong>✅ Safe Areas (where you'll be):</strong> Roma, Condesa, Polanco, Chapultepec, Centro Histórico daytime<br>
+                    <strong>⚠️ General Rules:</strong> Avoid displaying expensive jewelry/phones. Don't walk alone at night (use Uber). Stay in well-lit, populated areas. Avoid the southern suburbs.
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Metro vs. Uber Decision:</strong> Use metro for long distances (cheap, time-predictable). Use Uber for convenient, safe point-to-point travel (especially evenings). Roma neighborhood is very walkable—many attractions are within 20 minutes on foot.
+            </div>
+        </div>
+
+        <!-- TIPS TAB -->
+        <div id="tips" class="tab-content">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">💡 Local Tips &amp; Essentials</h2>
+
+            <div class="category">
+                <h3 class="category-title">Money &amp; Practical Info</h3>
+
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>💵 Currency &amp; Money</h4>
+                        <p><strong>Currency:</strong> Mexican Peso (MXN). 1 USD ≈ 17–18 MXN.<br>
+                        <strong>ATMs:</strong> Plenty in Roma, withdraw pesos. Most charge ~20–50 MXN fee.<br>
+                        <strong>Cards:</strong> Visa/Mastercard accepted most places, but carry cash for street vendors.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>📱 Communication</h4>
+                        <p><strong>SIM Cards:</strong> Buy at airport or convenience stores (Oxxo). Cheap local plans.<br>
+                        <strong>WiFi:</strong> Available in hotels, cafes, malls. Download offline maps (Google Maps works).<br>
+                        <strong>Language:</strong> Spanish spoken; English in tourist areas, hotels, restaurants.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>🌡️ Weather (Late October/Early Nov)</h4>
+                        <p><strong>Temperature:</strong> 15–25°C (59–77°F)<br>
+                        <strong>Conditions:</strong> Sunny, occasional rain<br>
+                        <strong>What to Pack:</strong> Light layers, sunscreen, hat, sunglasses, comfortable walking shoes, light rain jacket</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>🏥 Health &amp; Safety</h4>
+                        <p><strong>Vaccinations:</strong> No required; typhoid/hepatitis A recommended<br>
+                        <strong>Tap Water:</strong> Safe to drink in Roma. Use bottled water if concerned.<br>
+                        <strong>Pharmacies:</strong> Farmacia del Dr. Simi and Farmacia Guadalajara everywhere (cheap)</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>⚡ Altitude</h4>
+                        <p>Mexico City sits at 2,250 m (7,382 ft). You may feel mild altitude effects first 1–2 days. Hydrate well, avoid heavy activity initially. Coca-Cola with lime is traditional remedy.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>🗺️ Useful Apps</h4>
+                        <p><strong>Maps:</strong> Google Maps (offline mode)<br>
+                        <strong>Transport:</strong> Uber, Didi, Metro MX (official subway)<br>
+                        <strong>Dining:</strong> TripAdvisor, Google Reviews<br>
+                        <strong>Translation:</strong> Google Translate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">F1 Race Week Events &amp; Parties</h3>
+
+                <div class="listing">
+                    <div class="listing-title"><a href="https://www.formula1.com/en/racing/2026/mexico" target="_blank" style="color: var(--dark); text-decoration: none;">Official F1 Mexico Schedule 2026 ↗</a></div>
+                    <div class="listing-desc">Friday Oct 30: Practice 1 (12:30 PM) &amp; Practice 2 (4:00 PM) local. Saturday Oct 31: Practice 3 (11:30 AM) &amp; Qualifying (3:00 PM) local. Sunday Nov 1: Race (2:00 PM local / 1:00 PM Denver). Check official F1 website for any updates.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">F1 Paddock Club Events</div>
+                    <div class="listing-desc">If you have premium tickets, look for VIP events/parties. Most organized through ticket packages. Check your ticket information.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Telcel Festival (Usually Concurrent)</div>
+                    <div class="listing-desc">Annual music festival often happening same weekend as F1. Live concerts, food vendors. Check dates and lineup closer to trip.</div>
+                </div>
+
+                <div class="listing">
+                    <div class="listing-title">Party Venues in Roma/Condesa</div>
+                    <div class="listing-desc">F1 weekend brings tourists and parties. Expect crowded bars and restaurants Thursday–Sunday. Make dinner reservations well ahead. Your Airbnb on Calle Querétaro is surrounded by bars — Mama Rumba and Biergarten are literally steps away.</div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">Before You Go</h3>
+
+                <div class="note">
+                    <strong>Checklist:</strong><br>
+                    ✓ Passport valid 6+ months<br>
+                    ✓ Travel insurance (optional but recommended)<br>
+                    ✓ Notify bank of travel dates<br>
+                    ✓ Download offline maps (Google Maps)<br>
+                    ✓ Get local SIM or international plan<br>
+                    ✓ Confirm Airbnb check-in details (Calle Querétaro 240)<br>
+                    ✓ Make restaurant reservations for F1 weekend<br>
+                    ✓ Check <a href="https://www.formula1.com/en/racing/2026/mexico" target="_blank" style="color: var(--primary);">F1 official website</a> for any schedule updates
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>🏆 Final F1 Tip:</strong> The Mexican Grand Prix is one of the most exciting and spirited races on the F1 calendar. Mexican fans are passionate and the atmosphere is electric. Embrace it! Dress in team colors or F1 gear if you want—fans are friendly and welcoming.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Mexico City F1 Trip Guide | Updated May 2026 | Have an amazing trip! 🇲🇽🏎️</p>
+    </footer>
+
+    <!-- Password Gate -->
+    <div id="password-gate" style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #1d3557, #457b9d);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    ">
+        <div style="
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 380px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        ">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏎️🇲🇽</div>
+            <h2 style="color: #1d3557; margin-bottom: 0.4rem; font-size: 1.4rem;">Mexico City F1 Trip</h2>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 1.5rem;">Enter the password to view the trip guide</p>
+            <input
+                id="pw-input"
+                type="password"
+                placeholder="Password"
+                style="
+                    width: 100%;
+                    padding: 0.75rem 1rem;
+                    border: 2px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 1rem;
+                    outline: none;
+                    box-sizing: border-box;
+                    transition: border-color 0.2s;
+                "
+                onkeydown="if(event.key==='Enter') checkPassword()"
+                onfocus="this.style.borderColor='#457b9d'"
+                onblur="this.style.borderColor='#ddd'"
+            />
+            <div id="pw-error" style="color: #e63946; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2em;"></div>
+            <button
+                onclick="checkPassword()"
+                style="
+                    width: 100%;
+                    margin-top: 0.75rem;
+                    padding: 0.75rem;
+                    background: linear-gradient(135deg, #e63946, #457b9d);
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: opacity 0.2s;
+                "
+                onmouseover="this.style.opacity='0.9'"
+                onmouseout="this.style.opacity='1'"
+            >View Trip Guide →</button>
+        </div>
+    </div>
+
+    <script>
+        // Password gate
+        const SESSION_KEY = 'mcf1_auth';
+        const PW = atob('RjNycmFyaUNAa2VzIQ==');
+
+        function checkPassword() {
+            const input = document.getElementById('pw-input').value;
+            const err = document.getElementById('pw-error');
+            if (input === PW) {
+                sessionStorage.setItem(SESSION_KEY, '1');
+                document.getElementById('password-gate').style.display = 'none';
+                document.getElementById('pw-input').value = '';
+                err.textContent = '';
+            } else {
+                err.textContent = 'Incorrect password — try again.';
+                document.getElementById('pw-input').style.borderColor = '#e63946';
+                setTimeout(() => {
+                    document.getElementById('pw-input').style.borderColor = '#ddd';
+                }, 1500);
+            }
+        }
+
+        // Show gate on load if not already authenticated this session
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!sessionStorage.getItem(SESSION_KEY)) {
+                const gate = document.getElementById('password-gate');
+                gate.style.display = 'flex';
+                setTimeout(() => document.getElementById('pw-input').focus(), 100);
+            }
+        });
+
+        function switchTab(tabName, event) {
+            const contents = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            contents.forEach(content => content.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
